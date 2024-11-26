@@ -6,6 +6,7 @@ public class PlayerController : MonoBehaviour
 {
     [Header("PlayerComponents")]
     [SerializeField] CharacterController characterController;
+    [SerializeField] Animator animator;
 
     [Header("PlayerStats")]
     [SerializeField] float playerHealth;
@@ -35,10 +36,20 @@ public class PlayerController : MonoBehaviour
             
         }
 
+        if (context.canceled)
+        {
+            animator.SetBool("isWalking", false);
+        }
+
         //Player controls
         Vector2 movementVector = context.ReadValue<Vector2>();
 
         movementX = movementVector.x;
         movementY = movementVector.y;
+
+        if (context.performed)
+        {
+            animator.SetBool("isWalking", true);
+        }
     }
 }
