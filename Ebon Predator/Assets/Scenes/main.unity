@@ -2330,7 +2330,7 @@ MonoBehaviour:
   characterController: {fileID: 2066896391728108779}
   animator: {fileID: 2066896391728108781}
   playerHealth: 0
-  moveSpeed: 5
+  moveSpeed: 2
 --- !u!1 &2066896391728108784
 GameObject:
   m_ObjectHideFlags: 0

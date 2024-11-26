@@ -38,7 +38,8 @@ public class PlayerController : MonoBehaviour
 
         if (context.canceled)
         {
-            animator.SetBool("isWalking", false);
+            //animator.SetBool("isWalking", false);
+            animator.SetFloat("speed", 0);
         }
 
         //Player controls
@@ -49,7 +50,8 @@ public class PlayerController : MonoBehaviour
 
         if (context.performed)
         {
-            animator.SetBool("isWalking", true);
+            //animator.SetBool("isWalking", true);
+            animator.SetFloat("speed", movementY);
         }
     }
 }
