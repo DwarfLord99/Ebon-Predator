@@ -11,7 +11,6 @@ public class CameraController : MonoBehaviour
 
     private float rotationX;
 
-    // Start is called before the first frame update
     void Start()
     {
         sensitivity = PlayerPrefs.GetFloat("currentSensitivity", 100);
@@ -23,7 +22,6 @@ public class CameraController : MonoBehaviour
         Cursor.lockState = CursorLockMode.Locked;
     }
 
-    // Update is called once per frame
     void FixedUpdate()
     {
         PlayerPrefs.SetFloat("currentSensitivity", sensitivity);
@@ -37,12 +35,6 @@ public class CameraController : MonoBehaviour
             rotationX -= mouseY;
         else
             rotationX += mouseY;
-
-        //clamp the rotationX on the x-axis
-        rotationX = Mathf.Clamp(rotationX, lockVertMin, lockVertMax);
-
-        //rotate the camera on the x-axis
-        transform.localRotation = Quaternion.Euler(rotationX, 0, 0);
 
         //rotate the player on the y-axis
         playerCharacter.transform.Rotate(Vector3.up * mouseX);
