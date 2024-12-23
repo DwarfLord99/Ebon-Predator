@@ -1,8 +1,8 @@
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
-using UnityEngine.Windows;
 
-public class PlayerController : MonoBehaviour
+public class PlayerController : MonoBehaviour, IDamage
 {
     [Header("PlayerComponents")]
     [SerializeField] CharacterController characterController;
@@ -18,9 +18,13 @@ public class PlayerController : MonoBehaviour
 
     private float playerMaxHealth;
 
+    public float Health { get; set; }
+    public int Defense { get; set; }
+
     void Start()
     {
-        playerMaxHealth = playerHealth;
+        Health = playerHealth;
+        Defense = 5;
     }
 
     void FixedUpdate()
@@ -54,6 +58,52 @@ public class PlayerController : MonoBehaviour
         {
             animator.SetBool("isMoving", true);
             animator.SetFloat("moveSpeed", verticalInput);
+        }
+    }
+
+    public void TakeDamage(float damage)
+    {
+        // Apply defense to damage
+        float totalDamage = damage - Defense;
+
+        // If damage would drop below 0 due to defense, set to 0
+        if(totalDamage < 0)
+        {
+            totalDamage = 0;
+        }
+
+        // Decrease health
+        Health -= totalDamage;
+
+        // Prevent health from going into negatives if damage dealt exceeds health
+        if(totalDamage > Health)
+        {
+            Health = 0;
+        }
+
+        if(Health <= 0)
+        {
+            // If health hits 0, player dies
+            Die();
+        }
+    }
+
+    public void Die()
+    {
+        // play death animation
+        Destroy(gameObject);
+    }
+
+    public void RestoreHealth()
+    {
+        // recover health when healed
+    }
+
+    public void DamageTest()
+    {
+        if(Input.GetKeyDown(KeyCode.V))
+        {
+            TakeDamage(10);
         }
     }
 }
